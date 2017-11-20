@@ -25,5 +25,21 @@ namespace Sportstore.WebUI.Controllers
            Product product = repository.Products.FirstOrDefault(p => p.ProductId == productId);
            return View(product);
         }
+        [HttpPost]
+        public ActionResult Edit(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.SaveProduct(product);
+                TempData["Message"] = string.Format("Product '{0}' has been saved", product.Name);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(product);
+            }
+
+
+        }
     }
 }
