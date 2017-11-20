@@ -18,7 +18,7 @@ namespace UnitTests
         {
             //arrange
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
-            mock.Setup(m=>m.Products).Returns(new Product[] 
+            mock.Setup(m => m.Products).Returns(new Product[]
             {
                 new Product { Name = "P0", ProductId = 0, Price = 1 },
                 new Product { Name = "P1", ProductId = 1, Price = 4 },
@@ -28,9 +28,9 @@ namespace UnitTests
             //act
             Product[] result = ((IEnumerable<Product>)adminController.Index().ViewData.Model).ToArray();
             //assert
-            Assert.AreEqual("P1", result[0].Name);
-            Assert.AreEqual("P2", result[1].Name);
-            Assert.AreEqual("P3", result[2].Name);
+            Assert.AreEqual("P0", result[0].Name);
+            Assert.AreEqual("P1", result[1].Name);
+            Assert.AreEqual("P2", result[2].Name);
 
         }
         [TestMethod]
@@ -67,4 +67,25 @@ namespace UnitTests
             // Assert - check the method result type
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
+        [TestMethod]
+        public void Can_Delete_product()
+        {
+            //Arrange
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            Product productForDelete = new Product() { ProductId = 5, Name = "DelPr" };
+            mock.Setup(m => m.Products).Returns(new Product[]
+            {
+                new Product(){Name="p1",ProductId=0 },
+                new Product(){Name="p2",ProductId=1 },
+                productForDelete,
+                new Product(){Name="p3",ProductId=2 }
+            }.AsQueryable());
+            AdminController currentController = new AdminController(mock.Object);
+            //Action
+            currentController.Delete(productForDelete.ProductId);
+            //Assert
+            //Assert.AreEqual(3, mock.Object.Products.Count());
+            mock.Verify(m => m.DeleteProduct(productForDelete.ProductId));
+        }
+    }
 }

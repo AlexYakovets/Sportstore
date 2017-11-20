@@ -7,7 +7,7 @@ namespace Sportore.Domain.Entities
     public class Product
     {
         [HiddenInput(DisplayValue = false)]
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
         [Required(ErrorMessage = "Please enter a product name")]
         public string Name { get; set; }
         [DataType(DataType.MultilineText)]
