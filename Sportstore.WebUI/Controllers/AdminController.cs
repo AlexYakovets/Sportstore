@@ -8,6 +8,7 @@ using Sportore.Domain.Entities;
 
 namespace Sportstore.WebUI.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private IProductRepository repository;
@@ -46,6 +47,7 @@ namespace Sportstore.WebUI.Controllers
         [HttpPost]
         public ActionResult Delete(int productId)
         {
+
             Product deletedProduct = repository.DeleteProduct(productId);
             if (deletedProduct != null)
             {
