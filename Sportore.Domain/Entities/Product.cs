@@ -18,5 +18,10 @@ namespace Sportore.Domain.Entities
         public decimal Price { get; set; }
         [Required(ErrorMessage = "Please specify a category")]
         public string Category { get; set; }
+
+        public byte[] ImageData { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
+        public string ImageMimeType { get; set; }
     }
 }
